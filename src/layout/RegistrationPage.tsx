@@ -1,25 +1,25 @@
 import { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 import { auth } from '../firebase.ts';
 
-export default function LoginPage() {
+export default function RegistrationPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      alert('Logged in successfully!');
+      await createUserWithEmailAndPassword(auth, email, password);
+      alert('Registered successfully!');
     } catch (error) {
-      console.error('Login error:', error);
-      alert('Failed to log in.');
+      console.error('Registration error:', error);
+      alert('Failed to register.');
     }
   };
 
   return (
     <div>
-      <h1>Login</h1>
+      <h1>Register</h1>
       <input
         type="email"
         placeholder="Email"
@@ -32,7 +32,7 @@ export default function LoginPage() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={handleLogin}>Login</button>
+      <button onClick={handleRegister}>Register</button>
     </div>
   );
 }
