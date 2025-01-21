@@ -11,7 +11,7 @@ import { signOut } from "firebase/auth";
 
 export default function Header() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const { user, isLoading } = useAuth();
+  const { user } = useAuth();
 
   const toggleModal = () => {
     setIsLoginModalOpen(!isLoginModalOpen);

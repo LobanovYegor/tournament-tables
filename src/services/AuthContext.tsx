@@ -3,15 +3,21 @@ import { auth, db } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 
+interface UserData {
+  displayName: string;
+  email: string;
+  createdAt: Date;
+}
+
 interface AuthContextProps {
-  user: any;
+  user: UserData | null;
   loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider: React.FC = ({ children }) => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<UserData>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,7 +25,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       if (user) {
         const userDoc = await getDoc(doc(db, 'users', user.uid));
         if (userDoc.exists()) {
-          setUser(userDoc.data());
+          setUser(userDoc.data() as UserData);
         }
       } else {
         setUser(null);

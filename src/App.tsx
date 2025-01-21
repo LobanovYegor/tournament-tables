@@ -1,7 +1,6 @@
 import './App.css';
 import { db } from './firebase';
 import Header from "./components/Header/Header.tsx";
-import AuthModal from "./components/AuthModal/AuthModal.tsx";
 import HomePage from "./layout/HomePage.tsx";
 
 function App() {
