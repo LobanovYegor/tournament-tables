@@ -1,0 +1,81 @@
+/* AuthModal.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 16px 24px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+  position: relative;
+}
+
+.modal-content h2 {
+  color: #0a4969;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.modal-content form label {
+  font-size: 16px;
+}
+
+.modal-content form input {
+  padding: 8px;
+  font-size: 16px;
+  border: 0;
+  border-bottom: 1px solid #cacaca;
+  background-color: #f5f5f5;
+  width: 100%;
+}
+
+.modal-content form input:focus {
+  outline: none;
+  border-image: linear-gradient(to right, #57f6e7 0%, #208ca2 100%) 1;
+  background-color: #208ca220;
+}
+
+.modal-content form button {
+  width: auto;
+  align-self: center;
+  padding: 12px;
+  border: 0;
+  background-color: #208ca2;
+  color: #fff;
+  border-radius: 2px;
+}
+
+.modal-content form button:hover {
+    background-color: #146886;
+}
+
+.modal-content form button:disabled,
+.modal-content form button[disabled] {
+  background-color: #0a4969;
+  color: #ffffff20;
+  cursor: default;
+}

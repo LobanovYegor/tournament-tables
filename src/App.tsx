@@ -1,20 +1,23 @@
 import './App.css';
 import { db } from './firebase';
-import { Route, Routes } from 'react-router-dom';
+import Header from "./components/Header/Header.tsx";
+import HomePage from "./layout/HomePage.tsx";
 
-import HomePage from './layout/HomePage.tsx';
-import LoginPage from './layout/LoginPage.tsx';
-import RegistrationPage from "./layout/RegistrationPage.tsx";
-
-async function App() {
+function App() {
   console.log('Firestore instance:', db);
 
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegistrationPage />} />
-    </Routes>
+    <div className="main-container">
+      <div className="header-container">
+        <Header />
+      </div>
+      <div className="view-container">
+        <HomePage />
+      </div>
+      <div className="footer-container">
+        &copy; 2025
+      </div>
+    </div>
   );
 }
 
