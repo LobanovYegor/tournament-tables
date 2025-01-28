@@ -25,7 +25,7 @@
 
     "baseUrl": "./",
     "paths": {
-      "@services": ["src/contexts/index.ts"],
+      "@services": ["src/services/index.ts"],
       "@contexts": ["src/contexts/index.ts"],
       "@components": ["src/components/index.ts"]
     }
