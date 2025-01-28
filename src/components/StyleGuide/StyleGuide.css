@@ -1,0 +1,113 @@
+.style-guide {
+  padding: 20px;
+}
+
+.style-guide h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.style-guide section {
+  margin-bottom: 40px;
+}
+
+.style-guide .color-groups {
+  display: flex;
+  gap: 8px;
+}
+.style-guide .color-group {
+  width: 160px;
+}
+
+.style-guide .color-group .color-swatch {
+  width: 160px;
+  height: 24px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.style-guide .color-group .color-swatch .text-black {
+  color: black;
+}
+
+.style-guide .color-group .color-swatch .text-white {
+  color: white;
+}
+
+.primary-color-100 {
+  background-color: var(--primary-color-100);
+}
+
+.primary-color-200 {
+  background-color: var(--primary-color-200);
+}
+
+.primary-color-300 {
+  background-color: var(--primary-color-300);
+}
+
+.primary-color-400 {
+  background-color: var(--primary-color-400);
+}
+
+.primary-color-500 {
+  background-color: var(--primary-color-500);
+}
+
+.primary-color-600 {
+  background-color: var(--primary-color-600);
+}
+
+.primary-color-700 {
+  background-color: var(--primary-color-700);
+}
+
+.primary-color-800 {
+  background-color: var(--primary-color-800);
+}
+
+.primary-color-900 {
+  background-color: var(--primary-color-900);
+}
+
+.grayscale-color-100 {
+  background-color: var(--grayscale-color-100);
+}
+
+.grayscale-color-200 {
+  background-color: var(--grayscale-color-200);
+}
+
+.grayscale-color-300 {
+  background-color: var(--grayscale-color-300);
+}
+
+.grayscale-color-400 {
+  background-color: var(--grayscale-color-400);
+}
+
+.grayscale-color-500 {
+  background-color: var(--grayscale-color-500);
+}
+
+.grayscale-color-600 {
+  background-color: var(--grayscale-color-600);
+}
+
+.grayscale-color-700 {
+  background-color: var(--grayscale-color-700);
+}
+
+.grayscale-color-800 {
+  background-color: var(--grayscale-color-800);
+}
+
+.grayscale-color-900 {
+  background-color: var(--grayscale-color-900);
+}
+
+.style-guide .button-group {
+  display: flex;
+  gap: 8px;
+}

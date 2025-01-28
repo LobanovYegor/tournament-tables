@@ -1,11 +1,13 @@
-import React, {useEffect} from 'react';
-import {SubmitHandler, useForm} from 'react-hook-form';
-
 import './AuthModal.css';
 
-import {auth, db} from "../../firebase.ts";
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import React, { useEffect } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+
+import {
+  logIn,
+  registerUser,
+  setDocumentByPath,
+} from '../../services/firestore.service.ts';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -26,12 +28,19 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, toggleModal }) => {
   const [isLogin, setIsLogin] = React.useState(true);
   const [isPending, setIsPending] = React.useState(false);
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<RegistrationFormInputs | LoginFormInputs>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<RegistrationFormInputs | LoginFormInputs>();
 
-  const onLogin: SubmitHandler<LoginFormInputs> = async (data: LoginFormInputs) => {
+  const onLogin: SubmitHandler<LoginFormInputs> = async (
+    data: LoginFormInputs
+  ) => {
     setIsPending(true);
     try {
-      await signInWithEmailAndPassword(auth, data.email, data.password);
+      await logIn(data.email, data.password);
       toggleModal();
       reset();
     } catch (error) {
@@ -40,13 +49,13 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, toggleModal }) => {
     setIsPending(false);
   };
 
-  const onRegister: SubmitHandler<RegistrationFormInputs> = async data => {
+  const onRegister: SubmitHandler<RegistrationFormInputs> = async (data) => {
     setIsPending(true);
     try {
-      const authData = await createUserWithEmailAndPassword(auth, data.email, data.password);
+      const authData = await registerUser(data.email, data.password);
       const userId = authData.user.uid;
 
-      await setDoc(doc(db, "users", userId), {
+      await setDocumentByPath('users', userId, {
         displayName: data.displayName,
         email: data.email,
         createdAt: new Date(),
@@ -74,27 +83,22 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, toggleModal }) => {
   const toggleFormType = () => {
     reset();
     setIsLogin(!isLogin);
-  }
+  };
 
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>{isLogin ? "Log In" : "Registration"}</h2>
+        <h2>{isLogin ? 'Log In' : 'Registration'}</h2>
 
         <button className="close-button" onClick={toggleModal}>
-          <span className="material-symbols-outlined">
-            close
-          </span>
+          <span className="material-symbols-outlined">close</span>
         </button>
 
         {isLogin ? (
           <form onSubmit={handleSubmit(onLogin)}>
             <div className="form-input">
               <label> Email: </label>
-              <input
-                type="text"
-                {...register('email', { required: true })}
-              />
+              <input type="text" {...register('email', { required: true })} />
               {errors?.email && <span>This field is required</span>}
             </div>
 
@@ -107,16 +111,15 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, toggleModal }) => {
               {errors?.password && <span>This field is required</span>}
             </div>
 
-            <button type="submit" disabled={isPending}>Login</button>
+            <button type="submit" disabled={isPending}>
+              Login
+            </button>
           </form>
         ) : (
           <form onSubmit={handleSubmit(onRegister)}>
             <div className="form-input">
               <label> Email: </label>
-              <input
-                type="text"
-                {...register('email', { required: true })}
-              />
+              <input type="text" {...register('email', { required: true })} />
               {errors?.email && <span>This field is required</span>}
             </div>
 
@@ -133,7 +136,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, toggleModal }) => {
               <label> Confirm password: </label>
               <input
                 type="password"
-                {...register('confirmPassword', {required: true})}
+                {...register('confirmPassword', { required: true })}
               />
               {errors?.confirmPassword && <span>This field is required</span>}
             </div>
@@ -147,7 +150,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, toggleModal }) => {
               {errors?.displayName && <span>This field is required</span>}
             </div>
 
-            <button type="submit" disabled={isPending}>Register</button>
+            <button type="submit" disabled={isPending}>
+              Register
+            </button>
           </form>
         )}
 
