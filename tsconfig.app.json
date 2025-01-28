@@ -21,7 +21,14 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+
+    "baseUrl": "./",
+    "paths": {
+      "@services": ["src/contexts/index.ts"],
+      "@contexts": ["src/contexts/index.ts"],
+      "@components": ["src/components/index.ts"]
+    }
   },
   "include": ["src"]
 }

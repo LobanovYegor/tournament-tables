@@ -10,6 +10,7 @@ module.exports = {
     'plugin:import/typescript',
     'prettier',
     'eslint:recommended',
+    'plugin:storybook/recommended',
   ],
   plugins: [
     'react',

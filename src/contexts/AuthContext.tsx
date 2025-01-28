@@ -10,12 +10,14 @@ interface UserData {
   createdAt: Date;
 }
 
-interface AuthContextProps {
+export interface AuthContextProps {
   user: UserData | null;
   loading: boolean;
 }
 
-const AuthContext = createContext<AuthContextProps | undefined>(undefined);
+export const AuthContext = createContext<AuthContextProps | undefined>(
+  undefined
+);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<UserData>(null);

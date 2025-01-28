@@ -1,13 +1,8 @@
 import './AuthModal.css';
 
+import { createUserById, logIn, registerUser } from '@services';
 import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-
-import {
-  logIn,
-  registerUser,
-  setDocumentByPath,
-} from '../../services/firestore.service.ts';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -35,6 +30,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, toggleModal }) => {
     formState: { errors },
   } = useForm<RegistrationFormInputs | LoginFormInputs>();
 
+  // TODO: move method to AuthContext to have single source of truth for auth feature (except for modal functionality)
   const onLogin: SubmitHandler<LoginFormInputs> = async (
     data: LoginFormInputs
   ) => {
@@ -49,14 +45,14 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, toggleModal }) => {
     setIsPending(false);
   };
 
+  // TODO: move method to AuthContext to have single source of truth for auth feature
   const onRegister: SubmitHandler<RegistrationFormInputs> = async (data) => {
     setIsPending(true);
     try {
       const userId = await registerUser(data.email, data.password);
-      await setDocumentByPath('users', userId, {
+      await createUserById(userId, {
         displayName: data.displayName,
         email: data.email,
-        createdAt: new Date(),
       });
 
       toggleModal();

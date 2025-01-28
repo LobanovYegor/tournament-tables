@@ -22,7 +22,8 @@ export default function TournamentsList() {
 
   const navigateToCreate = () => navigate('/tournaments/edit');
 
-  const navigateToId = (id: string) => () => navigate(`/tournaments/details/${id}`);
+  const navigateToId = (id: string) => () =>
+    navigate(`/tournaments/details/${id}`);
 
   return (
     <div className="tournaments-list">
