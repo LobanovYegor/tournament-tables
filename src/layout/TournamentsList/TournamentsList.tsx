@@ -1,8 +1,10 @@
 import './TournamentsList.css';
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getCollectionByPath } from '../../services/firestore.service.ts';
+
 import { Tournament } from '../../data/models.ts';
+import { getCollectionByPath } from '../../services/firestore.service.ts';
 
 export default function TournamentsList() {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);

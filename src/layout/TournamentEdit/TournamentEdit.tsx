@@ -1,7 +1,9 @@
-import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import React from 'react';
 import './TournamentEdit.css';
+
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+
 import { addDocumentByPath } from '../../services/firestore.service.ts';
 
 interface TournamentFormInputs {

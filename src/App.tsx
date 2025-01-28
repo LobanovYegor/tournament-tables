@@ -1,12 +1,13 @@
 import './App.css';
 
-import Header from './components/Header/Header.tsx';
-import HomePage from './layout/HomePage/HomePage.tsx';
-import TournamentsList from './layout/TournamentsList/TournamentsList.tsx';
 import { Route, Routes } from 'react-router-dom';
+
+import Header from './components/Header/Header.tsx';
 import StyleGuide from './components/StyleGuide/StyleGuide.tsx';
-import TournamentEdit from './layout/TournamentEdit/TournamentEdit.tsx';
+import HomePage from './layout/HomePage/HomePage.tsx';
 import TournamentDetails from './layout/TournamentDetails/TournamentDetails.tsx';
+import TournamentEdit from './layout/TournamentEdit/TournamentEdit.tsx';
+import TournamentsList from './layout/TournamentsList/TournamentsList.tsx';
 
 function App() {
   return (

@@ -1,8 +1,10 @@
+import './TournamentDetails.css';
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import './TournamentDetails.css';
-import { getDocumentByPath } from '../../services/firestore.service.ts';
+
 import { Tournament } from '../../data/models.ts';
+import { getDocumentByPath } from '../../services/firestore.service.ts';
 
 export default function TournamentDetails() {
   const { id } = useParams<{ id: string }>();
@@ -16,7 +18,7 @@ export default function TournamentDetails() {
           'tournaments',
           id
         );
-        if (!!tournamentData) {
+        if (tournamentData) {
           setTournament(tournamentData);
         } else {
           navigate('tournaments');

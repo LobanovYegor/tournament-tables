@@ -52,9 +52,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, toggleModal }) => {
   const onRegister: SubmitHandler<RegistrationFormInputs> = async (data) => {
     setIsPending(true);
     try {
-      const authData = await registerUser(data.email, data.password);
-      const userId = authData.user.uid;
-
+      const userId = await registerUser(data.email, data.password);
       await setDocumentByPath('users', userId, {
         displayName: data.displayName,
         email: data.email,
