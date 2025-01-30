@@ -3,12 +3,12 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAwzmlc6j_p4JHoKhjV_5piTpjPqNJjPDM',
-  authDomain: 'tournament-tables-ab407.firebaseapp.com',
-  projectId: 'tournament-tables-ab407',
-  storageBucket: 'tournament-tables-ab407.firebasestorage.app',
-  messagingSenderId: '491187020529',
-  appId: '1:491187020529:web:db4c7d962ff2a076cb3f50',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);

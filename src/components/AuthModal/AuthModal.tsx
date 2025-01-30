@@ -1,13 +1,9 @@
 import './AuthModal.css';
 
+import { UserData } from '@models';
+import { createUserById, logIn, registerUser } from '@services';
 import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-
-import {
-  logIn,
-  registerUser,
-  setDocumentByPath,
-} from '../../services/firestore.service.ts';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -53,11 +49,11 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, toggleModal }) => {
     setIsPending(true);
     try {
       const userId = await registerUser(data.email, data.password);
-      await setDocumentByPath('users', userId, {
+      await createUserById(userId, {
         displayName: data.displayName,
         email: data.email,
         createdAt: new Date(),
-      });
+      } as UserData);
 
       toggleModal();
       reset();

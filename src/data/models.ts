@@ -6,3 +6,9 @@ export interface Tournament {
   startDate: string;
   status: string;
 }
+
+export interface UserData {
+  email: string;
+  displayName: string;
+  createdAt: string;
+}

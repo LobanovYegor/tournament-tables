@@ -1,6 +1,7 @@
 import {
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword, signOut,
+  signInWithEmailAndPassword,
+  signOut,
 } from 'firebase/auth';
 import {
   addDoc,

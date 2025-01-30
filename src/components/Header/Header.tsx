@@ -1,11 +1,10 @@
 import './Header.css';
 
+import { AuthModal } from '@components';
+import { useAuth } from '@contexts';
+import { logOut } from '@services';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
-import { useAuth } from '../../services/AuthContext.tsx';
-import {logOut} from "../../services/firestore.service.ts";
-import AuthModal from '../AuthModal/AuthModal.tsx';
 
 export default function Header() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
