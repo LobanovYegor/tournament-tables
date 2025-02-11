@@ -9,8 +9,16 @@ module.exports = {
     'plugin:import/warnings',
     'plugin:import/typescript',
     'prettier',
+    'eslint:recommended',
   ],
-  plugins: ['react', '@typescript-eslint', 'jsx-a11y', 'import', 'prettier'],
+  plugins: [
+    'react',
+    '@typescript-eslint',
+    'jsx-a11y',
+    'import',
+    'prettier',
+    'simple-import-sort',
+  ],
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: 'module',
@@ -31,5 +39,10 @@ module.exports = {
     'prettier/prettier': 'error',
     'react/react-in-jsx-scope': 'off', // React 17+ не требует импортировать React
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error',
+    'import/order': 'off',
+    'import/newline-after-import': ['error', { count: 1 }],
+    'import/no-duplicates': 'error',
   },
 };

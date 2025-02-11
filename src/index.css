@@ -1,11 +1,14 @@
+@import 'styles/_variables.css';
+@import 'styles/_buttons.css';
+@import 'styles/_forms.css';
+
 :root {
-  font-family: 'Inter', 'Montserrat', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', 'Montserrat', system-ui, Avenir, Helvetica, Arial,
+    sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  /*color: rgba(255, 255, 255, 0.87);*/
-  /*background-color: #242424;*/
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,12 +18,12 @@
 
 body {
   margin: 0;
-  font-family: "Montserrat", serif;
+  font-family: 'Montserrat', serif;
 }
 
 * {
   box-sizing: border-box;
-  font-family: "Montserrat", serif;
+  font-family: 'Montserrat', serif;
 }
 
 button {
@@ -28,13 +31,15 @@ button {
   cursor: pointer;
 }
 
-a, .link-text {
+a,
+.link-text {
   text-decoration: none;
-  color: #146886;
+  color: var(--primary-color-600);
   cursor: pointer;
 }
 
-a:hover, .link-text:hover {
-  color: #0a4969;
+a:hover,
+.link-text:hover {
+  color: var(--primary-color-700);
   text-decoration: underline;
 }

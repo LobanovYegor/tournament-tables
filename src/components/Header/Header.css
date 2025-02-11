@@ -1,32 +1,32 @@
 .header {
-    height: 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 24px;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
 }
 
 .header .controls {
-    display: flex;
-    gap: 1em;
-    align-items: center;
+  display: flex;
+  gap: 1em;
+  align-items: center;
 }
 
 .header .user-name {
-    font-size: 16px;
-    font-weight: bold;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .login-button {
-    width: auto;
-    align-self: center;
-    padding: 12px;
-    border: 0;
-    background-color: #208ca2;
-    color: #fff;
-    border-radius: 2px;
+  width: auto;
+  align-self: center;
+  padding: 12px;
+  border: 0;
+  background-color: var(--primary-color-500);
+  color: var(--grayscale-color-100);
+  border-radius: 2px;
 }
 
 .login-button:hover {
-    background-color: #146886;
+  background-color: var(--primary-color-600);
 }

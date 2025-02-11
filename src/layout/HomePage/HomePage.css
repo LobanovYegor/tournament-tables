@@ -1,0 +1,35 @@
+/* src/layout/HomePage.css */
+.home-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  max-width: 844px;
+  margin: auto;
+}
+
+.left-side {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left-side img {
+  max-width: 100%;
+  height: auto;
+}
+
+.right-side {
+  flex: 1;
+  padding: 20px;
+}
+
+.right-side h1 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.right-side p {
+  font-size: 1.2em;
+}

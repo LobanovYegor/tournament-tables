@@ -21,7 +21,7 @@
 }
 
 .modal-content h2 {
-  color: #0a4969;
+  color: var(--primary-color-700);
 }
 
 .close-button {
@@ -48,15 +48,20 @@ form {
   padding: 8px;
   font-size: 16px;
   border: 0;
-  border-bottom: 1px solid #cacaca;
-  background-color: #f5f5f5;
+  border-bottom: 1px solid var(--grayscale-color-400);
+  background-color: var(--grayscale-color-200);
   width: 100%;
 }
 
 .modal-content form input:focus {
   outline: none;
-  border-image: linear-gradient(to right, #57f6e7 0%, #208ca2 100%) 1;
-  background-color: #208ca220;
+  border-image: linear-gradient(
+      to right,
+      var(--primary-color-200) 0%,
+      var(--primary-color-500) 100%
+    )
+    1;
+  background-color: rgba(32, 140, 162, 0.1);
 }
 
 .modal-content form button {
@@ -64,18 +69,18 @@ form {
   align-self: center;
   padding: 12px;
   border: 0;
-  background-color: #208ca2;
-  color: #fff;
+  background-color: var(--primary-color-500);
+  color: var(--grayscale-color-100);
   border-radius: 2px;
 }
 
 .modal-content form button:hover {
-    background-color: #146886;
+  background-color: var(--primary-color-600);
 }
 
 .modal-content form button:disabled,
 .modal-content form button[disabled] {
-  background-color: #0a4969;
-  color: #ffffff20;
+  background-color: var(--primary-color-700);
+  color: rgba(255, 255, 255, 0.2);
   cursor: default;
 }

@@ -1,0 +1,25 @@
+.form-input label {
+  font-size: 16px;
+}
+
+.form-input input,
+.form-input select {
+  padding: 8px;
+  font-size: 16px;
+  border: 0;
+  border-bottom: 1px solid var(--grayscale-color-400);
+  background-color: var(--grayscale-color-200);
+  width: 100%;
+}
+
+.form-input input:focus,
+.form-input select:focus {
+  outline: none;
+  border-image: linear-gradient(
+      to right,
+      var(--primary-color-200) 0%,
+      var(--primary-color-500) 100%
+    )
+    1;
+  background-color: rgba(32, 140, 162, 0.1);
+}
