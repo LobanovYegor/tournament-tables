@@ -1,10 +1,10 @@
 import './TournamentEdit.css';
 
-import React from 'react';
+import { Tournament } from '@models';
+import { createTournament, getTournament, updateTournament } from '@services';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-
-import { addDocumentByPath } from '../../services/firestore.service.ts';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface TournamentFormInputs {
   name: string;
@@ -15,19 +15,46 @@ interface TournamentFormInputs {
 }
 
 export default function TournamentEdit() {
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<TournamentFormInputs>();
 
+  useEffect(() => {
+    const fetchTournament = async () => {
+      if (id) {
+        const tournamentData = await getTournament(id);
+        if (tournamentData) {
+          reset({
+            name: tournamentData.name,
+            description: tournamentData.description,
+            formatType: tournamentData.formatType,
+            // TODO: Update date usage!
+            startDate: new Date(tournamentData.startDate)
+              .toISOString()
+              .split('T')[0],
+            status: tournamentData.status,
+          });
+        } else {
+          navigate('/tournaments');
+        }
+      }
+    };
+
+    fetchTournament();
+  }, [reset, navigate]);
+
   const onSaveTournamentForm = async (data: TournamentFormInputs) => {
     try {
-      await addDocumentByPath('tournaments', {
-        ...data,
-        startDate: new Date(data.startDate).toISOString(),
-      });
+      if (id) {
+        await updateTournament(id, data as Tournament);
+      } else {
+        await createTournament(data as Tournament);
+      }
       navigate('/tournaments');
     } catch (error) {
       console.error('Error adding document: ', error);

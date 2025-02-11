@@ -1,6 +1,13 @@
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  FC,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 import { auth, db } from '../firebase.ts';
 
@@ -17,7 +24,7 @@ interface AuthContextProps {
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-export const AuthProvider: React.FC = ({ children }) => {
+export const AuthProvider: FC = ({ children }) => {
   const [user, setUser] = useState<UserData>(null);
   const [loading, setLoading] = useState(true);
 
@@ -37,11 +44,9 @@ export const AuthProvider: React.FC = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  return (
-    <AuthContext.Provider value={{ user, loading }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  const value = useMemo(() => ({ user, loading }), [user, loading]);
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
