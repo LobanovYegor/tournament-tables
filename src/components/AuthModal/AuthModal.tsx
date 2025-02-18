@@ -2,7 +2,7 @@ import './AuthModal.css';
 
 import { UserData } from '@models';
 import { createUserById, logIn, registerUser } from '@services';
-import React, { useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface AuthModalProps {
@@ -20,16 +20,16 @@ interface RegistrationFormInputs extends LoginFormInputs {
   displayName: string;
 }
 
-const AuthModal: React.FC<AuthModalProps> = ({ isOpen, toggleModal }) => {
-  const [isLogin, setIsLogin] = React.useState(true);
-  const [isPending, setIsPending] = React.useState(false);
+export const AuthModal: FC<AuthModalProps> = ({ isOpen, toggleModal }) => {
+  const [isLogin, setIsLogin] = useState(true);
+  const [isPending, setIsPending] = useState(false);
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<RegistrationFormInputs | LoginFormInputs>();
+  } = useForm<RegistrationFormInputs & LoginFormInputs>();
 
   const onLogin: SubmitHandler<LoginFormInputs> = async (
     data: LoginFormInputs
@@ -163,5 +163,3 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, toggleModal }) => {
     </div>
   );
 };
-
-export default AuthModal;

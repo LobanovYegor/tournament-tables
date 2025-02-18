@@ -23,6 +23,7 @@ function App() {
             element={<TournamentDetails />}
           />
           <Route path="/tournaments/edit" element={<TournamentEdit />} />
+          <Route path="/tournaments/edit/:id" element={<TournamentEdit />} />
           <Route path="/style-guide" element={<StyleGuide />} />
         </Routes>
       </div>

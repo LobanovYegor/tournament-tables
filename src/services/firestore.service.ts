@@ -1,3 +1,4 @@
+import { deleteDoc } from '@firebase/firestore';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -71,4 +72,8 @@ export const updateDocumentByPath = async <T>(
   data: Partial<T>
 ): Promise<void> => {
   await setDoc(doc(db, path, id), data, { merge: true });
+};
+
+export const deleteDocumentByPath = async (path, id) => {
+  await deleteDoc(doc(db, path, id));
 };
