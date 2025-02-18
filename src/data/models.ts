@@ -7,6 +7,12 @@ export interface Tournament {
   status: string;
 }
 
+export interface TournamentParticipant {
+  id?: string;
+  name: string;
+  score?: number;
+}
+
 export interface UserData {
   email: string;
   displayName: string;

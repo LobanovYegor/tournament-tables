@@ -1,88 +1,52 @@
 import './TournamentDetails.css';
 
 import { Table } from '@components';
-import { Tournament } from '@models';
-import { getTournament } from '@services';
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import { AnyAction, unwrapResult } from '@reduxjs/toolkit';
+import { AppDispatch, RootState } from '@store';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-interface TournamentTableState {
-  participants: [];
-  isEditing: boolean;
-  isLoading: boolean;
-}
-
-const initialState: TournamentTableState = {
-  participants: [],
-  isEditing: false,
-  isLoading: false,
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case 'TOGGLE_EDIT_TABLE':
-      return { ...state, isEditing: !state.isEditing };
-    case 'ADD_PARTICIPANT':
-      return { ...state, participants: [...state.participants, action.value] };
-    case 'UPDATE_PARTICIPANT':
-      return {
-        ...state,
-        participants: state.participants.map((participant, index) =>
-          index === action.index
-            ? { ...participant, ...action.value }
-            : participant
-        ),
-      };
-    default:
-      return state;
-  }
-}
+import {
+  addParticipant,
+  fetchTournament,
+  toggleEditing,
+  updateParticipant,
+} from '../../store/tournametnSlice.ts';
 
 export default function TournamentDetails() {
   const { id } = useParams<{ id: string }>();
-  const [tournament, setTournament] = useState<Tournament | null>(null);
   const navigate = useNavigate();
-
-  const [state, dispatch] = useReducer(
-    reducer,
-    initialState,
-    () => initialState
+  const dispatch = useDispatch<AppDispatch>();
+  const { tournament, participants, isLoading, isEditing } = useSelector(
+    (state: RootState) => state.tournament
   );
 
-  const openTableForEdit = useCallback(() => {
-    dispatch({ type: 'TOGGLE_EDIT_TABLE' });
-  }, []);
-  const addParticipant = useCallback(() => {
-    dispatch({
-      type: 'ADD_PARTICIPANT',
-      value: { name: 'New Participant', score: 0 },
-    });
-  }, []);
-  const handlePointChange = useCallback((index, value) => {
-    dispatch({ type: 'UPDATE_PARTICIPANT', index, value: { score: value } });
-  }, []);
-  const handleNameChange = useCallback((index, value) => {
-    dispatch({ type: 'UPDATE_PARTICIPANT', index, value: { name: value } });
-  }, []);
-
   useEffect(() => {
-    const fetchTournament = async () => {
-      if (id) {
-        const tournamentData = await getTournament(id);
-        if (tournamentData) {
-          setTournament(tournamentData);
-        } else {
+    if (id) {
+      dispatch(fetchTournament(id) as unknown as AnyAction)
+        .then(unwrapResult)
+        .catch(() => {
           navigate('/tournaments');
-        }
-      }
-    };
+        });
+    }
+  }, [id, dispatch]);
 
-    fetchTournament();
-  }, [navigate]);
-
-  if (!tournament || state.isLoading) {
+  if (!tournament || isLoading) {
     return <div>Loading...</div>;
   }
+
+  const handlePointChange = (index: number, value: number) => {
+    dispatch(updateParticipant({ index, data: { score: value } }));
+  };
+
+  const handleNameChange = (index: number, value: string) => {
+    dispatch(updateParticipant({ index, data: { name: value } }));
+  };
+
+  const handleAddParticipant = () => {
+    dispatch(addParticipant({ score: 0, name: 'New Participant' }));
+  };
 
   return (
     <div className="tournament-detail">
@@ -92,19 +56,22 @@ export default function TournamentDetails() {
       <p>Start Date: {tournament.startDate}</p>
       <p>Status: {tournament.status}</p>
 
-      <button className="primary-button" onClick={openTableForEdit}>
-        {state.isEditing ? 'Save' : 'Edit'}
+      <button
+        className="primary-button"
+        onClick={() => dispatch(toggleEditing())}
+      >
+        {isEditing ? 'Save' : 'Edit'}
       </button>
 
       <div className="tournament-table">
         <Table>
-          <Table.Header columns={['Position', 'Title', 'Score']}></Table.Header>
+          <Table.Header columns={['Position', 'Title', 'Score']} />
           <Table.Body>
-            {state.participants.map((participant, index) => (
-              <Table.Row key={index}>
+            {participants.map((participant, index) => (
+              <Table.Row key={index} className="tournament-row">
                 <Table.Cell>{index + 1}</Table.Cell>
                 <Table.Cell>
-                  {state.isEditing ? (
+                  {isEditing ? (
                     <input
                       defaultValue={participant.name}
                       onBlur={(e) => handleNameChange(index, e.target.value)}
@@ -114,10 +81,13 @@ export default function TournamentDetails() {
                   )}
                 </Table.Cell>
                 <Table.Cell>
-                  {state.isEditing ? (
+                  {isEditing ? (
                     <input
+                      type="number"
                       defaultValue={participant.score}
-                      onBlur={(e) => handlePointChange(index, e.target.value)}
+                      onBlur={(e) =>
+                        handlePointChange(index, Number(e.target.value))
+                      }
                     />
                   ) : (
                     participant.score
@@ -125,10 +95,13 @@ export default function TournamentDetails() {
                 </Table.Cell>
               </Table.Row>
             ))}
-            {state.isEditing && (
+            {isEditing && (
               <Table.Row>
-                <Table.Cell>
-                  <button className="primary-button" onClick={addParticipant}>
+                <Table.Cell colSpan={3} style={{ textAlign: 'center' }}>
+                  <button
+                    className="primary-button"
+                    onClick={handleAddParticipant}
+                  >
                     Add participant
                   </button>
                 </Table.Cell>

@@ -1,7 +1,7 @@
 import './Header.css';
 
 import { AuthModal } from '@components';
-import { useAuth } from '@contexts';
+import { useAuth } from '@hooks';
 import { logOut } from '@services';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -42,7 +42,7 @@ export default function Header() {
           </>
         ) : (
           <>
-            <button className="login-button" onClick={toggleModal}>
+            <button className="primary-button" onClick={toggleModal}>
               Login
             </button>
             <AuthModal

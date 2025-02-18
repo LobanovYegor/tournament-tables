@@ -25,27 +25,39 @@ interface TableCellProps {
 }
 
 export const Table: FC<TableProps> = ({ children, className }) => {
-  return <table className={className}>{children}</table>;
+  return (
+    <table className={'w-full border-collapse' + className}>{children}</table>
+  );
 };
 
 const Header: FC<TableHeaderProps> = ({ columns }) => {
   return (
-    <thead>
-      <tr>{columns?.map((col) => <th key={col}>{col}</th>)}</tr>
+    <thead className="bg-gray-100 text-gray-700 uppercase text-sm">
+      <tr>
+        {columns?.map((col) => (
+          <th key={col} className="px-6 py-3 text-left">
+            {col}
+          </th>
+        ))}
+      </tr>
     </thead>
   );
 };
 
 const Body: FC<TableBodyProps> = ({ children }) => {
-  return <tbody>{children}</tbody>;
+  return <tbody className="divide-y divide-gray-200">{children}</tbody>;
 };
 
 const Row: FC<TableRowProps> = ({ children, onClick }) => {
-  return <tr onClick={onClick}>{children}</tr>;
+  return (
+    <tr onClick={onClick} className={'bg-gray-50'}>
+      {children}
+    </tr>
+  );
 };
 
 const Cell: FC<TableCellProps> = ({ children }) => {
-  return <td>{children}</td>;
+  return <td className="px-6 py-4">{children}</td>;
 };
 
 Table.Header = Header;

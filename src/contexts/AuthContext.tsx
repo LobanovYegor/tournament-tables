@@ -1,28 +1,18 @@
+import { UserData } from '@models';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import {
-  createContext,
-  FC,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { createContext, FC, useEffect, useMemo, useState } from 'react';
 
-import { auth, db } from '../firebase.ts';
-
-interface UserData {
-  displayName: string;
-  email: string;
-  createdAt: Date;
-}
+import { auth, db } from '../firebase';
 
 interface AuthContextProps {
   user: UserData | null;
   loading: boolean;
 }
 
-const AuthContext = createContext<AuthContextProps | undefined>(undefined);
+export const AuthContext = createContext<AuthContextProps | undefined>(
+  undefined
+);
 
 export const AuthProvider: FC = ({ children }) => {
   const [user, setUser] = useState<UserData>(null);
@@ -47,12 +37,4 @@ export const AuthProvider: FC = ({ children }) => {
   const value = useMemo(() => ({ user, loading }), [user, loading]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within a UserProvider');
-  }
-  return context;
 };
