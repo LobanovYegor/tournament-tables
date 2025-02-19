@@ -46,7 +46,7 @@ export default function TournamentEdit() {
     };
 
     fetchTournament();
-  }, [reset, navigate]);
+  }, [reset, navigate, id]);
 
   const onSaveTournamentForm = async (data: TournamentFormInputs) => {
     try {

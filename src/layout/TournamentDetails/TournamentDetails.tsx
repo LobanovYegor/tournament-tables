@@ -1,52 +1,41 @@
 import './TournamentDetails.css';
 
 import { Table } from '@components';
-import { AnyAction, unwrapResult } from '@reduxjs/toolkit';
-import { AppDispatch, RootState } from '@store';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Tournament } from '@models';
+import { useParams } from 'react-router-dom';
+import { useGetTournamentQuery } from 'src/services/tournamentsApi.ts';
 
-import {
-  addParticipant,
-  fetchTournament,
-  toggleEditing,
-  updateParticipant,
-} from '../../store/tournametnSlice.ts';
+import { toggleEditing } from '../../store/tournamentSlice.ts';
 
 export default function TournamentDetails() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
-  const { tournament, participants, isLoading, isEditing } = useSelector(
-    (state: RootState) => state.tournament
-  );
+  const { data, error, isLoading } = useGetTournamentQuery({ id });
+  const tournament = data as Tournament;
 
-  useEffect(() => {
-    if (id) {
-      dispatch(fetchTournament(id) as unknown as AnyAction)
-        .then(unwrapResult)
-        .catch(() => {
-          navigate('/tournaments');
-        });
-    }
-  }, [id, dispatch]);
+  // useEffect(() => {
+  //   if (id) {
+  //     dispatch(getTournament(id) as unknown as AnyAction)
+  //       .then(unwrapResult)
+  //       .catch(() => {
+  //         navigate('/tournaments');
+  //       });
+  //   }
+  // }, [id, dispatch, navigate]);
 
-  if (!tournament || isLoading) {
-    return <div>Loading...</div>;
-  }
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading tournaments</div>;
 
-  const handlePointChange = (index: number, value: number) => {
-    dispatch(updateParticipant({ index, data: { score: value } }));
-  };
+  // const handlePointChange = (index: number, value: number) => {
+  //   dispatch(updateParticipant({ index, data: { score: value } }));
+  // };
 
-  const handleNameChange = (index: number, value: string) => {
-    dispatch(updateParticipant({ index, data: { name: value } }));
-  };
+  // const handleNameChange = (index: number, value: string) => {
+  //   dispatch(updateParticipant({ index, data: { name: value } }));
+  // };
 
-  const handleAddParticipant = () => {
-    dispatch(addParticipant({ score: 0, name: 'New Participant' }));
-  };
+  // const handleAddParticipant = () => {
+  //   dispatch(addParticipant({ score: 0, name: 'New Participant' }));
+  // };
 
   return (
     <div className="tournament-detail">

@@ -1,11 +1,5 @@
 import { Tournament, TournamentParticipant } from '@models';
-import {
-  ActionReducerMapBuilder,
-  createAsyncThunk,
-  createSlice,
-  PayloadAction,
-} from '@reduxjs/toolkit';
-import { getTournament } from '@services';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface TournamentState {
   tournament: Tournament | null;
@@ -20,22 +14,6 @@ const initialState: TournamentState = {
   isLoading: false,
   isEditing: false,
 };
-
-export const fetchTournament = createAsyncThunk<
-  Tournament,
-  string,
-  { rejectValue: string }
->('tournament/fetchTournament', async (id: string, { rejectWithValue }) => {
-  try {
-    const response = await getTournament(id);
-    if (!response) {
-      return rejectWithValue('Tournament not found');
-    }
-    return response;
-  } catch (error) {
-    return rejectWithValue(error.message);
-  }
-});
 
 const tournamentSlice = createSlice({
   initialState,
@@ -63,23 +41,6 @@ const tournamentSlice = createSlice({
       const { index, data } = action.payload;
       state.participants[index] = { ...state.participants[index], ...data };
     },
-  },
-  extraReducers: (builder: ActionReducerMapBuilder<TournamentState>) => {
-    builder
-      .addCase(fetchTournament.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(
-        fetchTournament.fulfilled,
-        (state, action: PayloadAction<Tournament>) => {
-          state.isLoading = false;
-          state.tournament = action.payload;
-        }
-      )
-      .addCase(fetchTournament.rejected, (state, action) => {
-        state.isLoading = false;
-        console.error(action.payload);
-      });
   },
 });
 
