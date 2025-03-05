@@ -1,6 +1,8 @@
-@import 'styles/_variables.css';
-@import 'styles/_buttons.css';
-@import 'styles/_forms.css';
+@import 'tailwindcss';
+
+@import './styles/_variables.css';
+@import './styles/_forms.css';
+@import './styles/_buttons.css';
 
 :root {
   font-family: 'Inter', 'Montserrat', system-ui, Avenir, Helvetica, Arial,

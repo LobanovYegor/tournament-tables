@@ -2,19 +2,14 @@ import './TournamentsList.css';
 
 import { Table } from '@components';
 import { Tournament } from '@models';
-import { deleteTournament, getCollectionByPath } from '@services';
-import React, { useCallback, useEffect, useState } from 'react';
+import { MouseEvent as ReactMouseEvent, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function TournamentsList() {
-  const [tournaments, setTournaments] = useState<Tournament[]>([]);
-  const navigate = useNavigate();
+import { useGetTournamentsQuery } from '../../services/tournamentsApi.ts';
 
-  const fetchTournaments = useCallback(async () => {
-    const tournamentsData =
-      await getCollectionByPath<Tournament>('tournaments');
-    setTournaments(tournamentsData);
-  }, []);
+export default function TournamentsList() {
+  const { data, error, isLoading } = useGetTournamentsQuery({});
+  const navigate = useNavigate();
 
   const navigateToCreate = useCallback(
     () => navigate('/tournaments/edit'),
@@ -29,25 +24,15 @@ export default function TournamentsList() {
   );
 
   const handleEdit = useCallback(
-    (id: string) => (event) => {
+    (id: string) => (event: ReactMouseEvent) => {
       event.stopPropagation();
       navigate(`/tournaments/edit/${id}`);
     },
     [navigate]
   );
 
-  const handleDelete = useCallback(
-    (id: string) => async (event) => {
-      event.stopPropagation();
-      await deleteTournament(id);
-      await fetchTournaments();
-    },
-    [fetchTournaments]
-  );
-
-  useEffect(() => {
-    fetchTournaments();
-  }, [fetchTournaments]);
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading tournaments</div>;
 
   return (
     <div className="tournaments-list">
@@ -60,7 +45,7 @@ export default function TournamentsList() {
           columns={['Name', 'Type', 'Date', 'Status', '']}
         ></Table.Header>
         <Table.Body>
-          {tournaments.map((tournament) => (
+          {((data as Tournament[]) || []).map((tournament: Tournament) => (
             <Table.Row
               key={tournament.id}
               onClick={navigateToId(tournament.id)}
@@ -76,12 +61,7 @@ export default function TournamentsList() {
                 >
                   EDIT
                 </button>
-                <button
-                  className="primary-button"
-                  onClick={handleDelete(tournament.id)}
-                >
-                  DELETE
-                </button>
+                <button className="primary-button">DELETE</button>
               </Table.Cell>
             </Table.Row>
           ))}

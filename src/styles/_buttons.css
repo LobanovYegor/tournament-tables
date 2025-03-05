@@ -6,6 +6,7 @@
   background-color: var(--primary-color-500);
   color: var(--grayscale-color-100);
   border-radius: 4px;
+  font-size: 14px;
 }
 
 .primary-button.hover,
@@ -28,6 +29,7 @@
   background-color: var(--grayscale-color-400);
   color: var(--grayscale-color-100);
   border-radius: 4px;
+  font-size: 14px;
 }
 
 .secondary-button.hover,

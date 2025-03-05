@@ -1,4 +1,4 @@
-import { deleteDoc } from '@firebase/firestore';
+import { deleteDoc, DocumentData } from '@firebase/firestore';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -51,14 +51,14 @@ export const getDocumentByPath = async <T>(
   }
 };
 
-export const addDocumentByPath = async <T>(
+export const addDocumentByPath = async <T extends DocumentData>(
   path: string,
   data: T
 ): Promise<void> => {
   await addDoc(collection(db, path), data);
 };
 
-export const setDocumentByPath = async <T>(
+export const setDocumentByPath = async <T extends DocumentData>(
   path: string,
   id: string,
   data: T
@@ -66,7 +66,7 @@ export const setDocumentByPath = async <T>(
   await setDoc(doc(db, path, id), data);
 };
 
-export const updateDocumentByPath = async <T>(
+export const updateDocumentByPath = async <T extends DocumentData>(
   path: string,
   id: string,
   data: Partial<T>
@@ -74,6 +74,6 @@ export const updateDocumentByPath = async <T>(
   await setDoc(doc(db, path, id), data, { merge: true });
 };
 
-export const deleteDocumentByPath = async (path, id) => {
+export const deleteDocumentByPath = async (path: string, id: string) => {
   await deleteDoc(doc(db, path, id));
 };
