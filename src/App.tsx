@@ -5,7 +5,6 @@ import { Route, Routes } from 'react-router-dom';
 
 import HomePage from './layout/HomePage/HomePage';
 import TournamentDetails from './layout/TournamentDetails/TournamentDetails';
-import TournamentEdit from './layout/TournamentEdit/TournamentEdit';
 import TournamentsList from './layout/TournamentsList/TournamentsList';
 
 function App() {
@@ -22,8 +21,6 @@ function App() {
             path="/tournaments/details/:id"
             element={<TournamentDetails />}
           />
-          <Route path="/tournaments/edit" element={<TournamentEdit />} />
-          <Route path="/tournaments/edit/:id" element={<TournamentEdit />} />
           <Route path="/style-guide" element={<StyleGuide />} />
         </Routes>
       </div>

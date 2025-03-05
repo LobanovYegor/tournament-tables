@@ -15,13 +15,17 @@ import {
 
 import { auth, db } from '../firebase';
 
-export const logIn = async (email: string, password: string): Promise<void> => {
-  await signInWithEmailAndPassword(auth, email, password);
+export const authSignIn = async (
+  email: string,
+  password: string
+): Promise<string> => {
+  const authData = await signInWithEmailAndPassword(auth, email, password);
+  return authData.user.uid;
 };
 
-export const logOut = async (): Promise<void> => signOut(auth);
+export const authSignOut = async (): Promise<void> => signOut(auth);
 
-export const registerUser = async (
+export const authRegisterUser = async (
   email: string,
   password: string
 ): Promise<string> => {
@@ -44,7 +48,11 @@ export const getDocumentByPath = async <T>(
   const docRef = doc(db, path, id);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
-    return { id: docSnap.id, ...docSnap.data() } as T;
+    return {
+      ...docSnap.data(),
+      id: docSnap.id,
+      createdAt: docSnap.data().createdAt?.toDate().toISOString(),
+    } as T;
   } else {
     console.error('No such document!');
     return null;
@@ -54,8 +62,9 @@ export const getDocumentByPath = async <T>(
 export const addDocumentByPath = async <T extends DocumentData>(
   path: string,
   data: T
-): Promise<void> => {
-  await addDoc(collection(db, path), data);
+): Promise<string> => {
+  const newDocRef = await addDoc(collection(db, path), data);
+  return newDocRef.id;
 };
 
 export const setDocumentByPath = async <T extends DocumentData>(

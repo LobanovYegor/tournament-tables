@@ -1,9 +1,9 @@
 import './Header.css';
 
-import { AuthModal } from '@components';
+import { AuthModal, Button } from '@components';
 import { useAuth } from '@hooks';
 import { logOut } from '@services';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Header() {
@@ -11,6 +11,7 @@ export default function Header() {
   const { user } = useAuth();
 
   const toggleModal = () => {
+    console.log('toggleModal');
     setIsLoginModalOpen(!isLoginModalOpen);
   };
 
@@ -42,17 +43,15 @@ export default function Header() {
           </>
         ) : (
           <>
-            <button className="primary-button" onClick={toggleModal}>
-              Login
-            </button>
-            <AuthModal
-              isOpen={isLoginModalOpen}
-              toggleModal={toggleModal}
-              shouldCloseOnOverlayClick={true}
-            />
+            <Button onClick={toggleModal}>Login</Button>
           </>
         )}
       </div>
+      <AuthModal
+        isOpen={isLoginModalOpen}
+        toggleModal={toggleModal}
+        shouldCloseOnOverlayClick={true}
+      />
     </header>
   );
 }

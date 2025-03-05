@@ -7,7 +7,7 @@ export interface Tournament {
   status: string;
 }
 
-export interface TournamentParticipant {
+export interface Participant {
   id?: string;
   name: string;
   score?: number;

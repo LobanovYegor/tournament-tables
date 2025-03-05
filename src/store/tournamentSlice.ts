@@ -1,9 +1,9 @@
-import { Tournament, TournamentParticipant } from '@models';
+import { Participant, Tournament } from '@models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface TournamentState {
   tournament: Tournament | null;
-  participants: TournamentParticipant[];
+  participants: Participant[];
   isLoading: boolean;
   isEditing: boolean;
 }
@@ -28,14 +28,14 @@ const tournamentSlice = createSlice({
     toggleEditing(state) {
       state.isEditing = !state.isEditing;
     },
-    addParticipant(state, action: PayloadAction<TournamentParticipant>) {
+    addParticipant(state, action: PayloadAction<Participant>) {
       state.participants.push(action.payload);
     },
     updateParticipant(
       state,
       action: PayloadAction<{
         index: number;
-        data: Partial<TournamentParticipant>;
+        data: Partial<Participant>;
       }>
     ) {
       const { index, data } = action.payload;
