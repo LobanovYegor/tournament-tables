@@ -1,16 +1,21 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { tournamentsApi } from '../services/tournamentsApi.ts';
-import tournamentReducer from './tournamentSlice.ts';
+import {
+  authReducer,
+  tournamentDetailsReducer,
+  tournamentsReducer,
+} from './reducers';
 
 export const store = configureStore({
   reducer: {
-    [tournamentsApi.reducerPath]: tournamentsApi.reducer,
-    tournament: tournamentReducer,
+    auth: authReducer,
+    tournaments: tournamentsReducer,
+    tournamentDetails: tournamentDetailsReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(tournamentsApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
+export * from './actions';

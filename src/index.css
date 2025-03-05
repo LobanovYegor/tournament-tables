@@ -4,6 +4,32 @@
 @import './styles/_forms.css';
 @import './styles/_buttons.css';
 
+@theme {
+  --color-primary-50: #f2f9f9;
+  --color-primary-100: #ddeff0;
+  --color-primary-200: #bfe0e2;
+  --color-primary-300: #92cace;
+  --color-primary-400: #5faab1;
+  --color-primary-500: #438e96;
+  --color-primary-600: #3b757f;
+  --color-primary-700: #356169;
+  --color-primary-800: #325158;
+  --color-primary-900: #2d464c;
+  --color-primary-950: #1a2c32;
+
+  --color-secondary-50: #f9faeb;
+  --color-secondary-100: #f2f3d4;
+  --color-secondary-200: #e5e8ae;
+  --color-secondary-300: #d0d77f;
+  --color-secondary-400: #bbc556;
+  --color-secondary-500: #9eaa38;
+  --color-secondary-600: #7b8729;
+  --color-secondary-700: #576021;
+  --color-secondary-800: #4b5321;
+  --color-secondary-900: #404720;
+  --color-secondary-950: #21260d;
+}
+
 :root {
   font-family: 'Inter', 'Montserrat', system-ui, Avenir, Helvetica, Arial,
     sans-serif;
@@ -27,11 +53,11 @@ body {
   box-sizing: border-box;
   font-family: 'Montserrat', serif;
 }
-
+/* 
 button {
   font-weight: bold;
   cursor: pointer;
-}
+} */
 
 a,
 .link-text {

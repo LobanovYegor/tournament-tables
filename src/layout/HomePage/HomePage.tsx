@@ -1,7 +1,5 @@
 import './HomePage.css';
 
-import React from 'react';
-
 import illustration from '../../assets/tournament-win-illustration.jpeg';
 
 export default function HomePage() {

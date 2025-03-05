@@ -1,6 +1,6 @@
 import './index.css';
 
-import { AuthProvider } from '@contexts';
+import { AuthProvider } from '@providers';
 import { store } from '@store';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';

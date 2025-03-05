@@ -1,3 +1,2 @@
-export * from './firestore.service';
+export * from './auth.service';
 export * from './tournament.service';
-export * from './user.service';
