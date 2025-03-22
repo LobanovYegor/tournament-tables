@@ -1,5 +1,3 @@
-import './Header.css';
-
 import { AuthModal, Button } from '@components';
 import { useAuth } from '@hooks';
 import { logOut } from '@services';
@@ -11,7 +9,6 @@ export default function Header() {
   const { user } = useAuth();
 
   const toggleModal = () => {
-    console.log('toggleModal');
     setIsLoginModalOpen(!isLoginModalOpen);
   };
 
@@ -24,16 +21,16 @@ export default function Header() {
   };
 
   return (
-    <header className="header">
-      <div className="logo">
+    <header className="flex justify-between items-center px-6 h-16">
+      <div>
         <Link to="/">Logo</Link>
       </div>
-      <div className="controls">
+      <div className="flex gap-4 items-center">
         <Link to="/tournaments">Current tournaments</Link>
         <a>Support</a>
         {user ? (
           <>
-            <span className="user-name">{user.displayName}</span>
+            <span className="font-bold">{user.displayName}</span>
             <span
               className="material-symbols-outlined link-text"
               onClick={handleLogout}
@@ -47,11 +44,7 @@ export default function Header() {
           </>
         )}
       </div>
-      <AuthModal
-        isOpen={isLoginModalOpen}
-        toggleModal={toggleModal}
-        shouldCloseOnOverlayClick={true}
-      />
+      <AuthModal isOpen={isLoginModalOpen} onClose={toggleModal} />
     </header>
   );
 }

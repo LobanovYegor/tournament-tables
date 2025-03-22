@@ -57,7 +57,7 @@ export default function TournamentsList() {
 
       <CreateTournamentModal
         isOpen={isCreateModalOpen}
-        toggleModal={toggleCreateModal}
+        onClose={toggleCreateModal}
       />
     </div>
   );

@@ -12,8 +12,7 @@ import { Button } from '../Button/Button';
 
 interface AuthModalProps {
   isOpen: boolean;
-  shouldCloseOnOverlayClick: boolean;
-  toggleModal: () => void;
+  onClose: () => void;
 }
 
 interface LoginFormInputs {
@@ -28,7 +27,7 @@ interface RegistrationFormInputs extends LoginFormInputs {
   lastName?: string;
 }
 
-export const AuthModal: FC<AuthModalProps> = ({ isOpen, toggleModal }) => {
+export const AuthModal: FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [isLogin, setIsLogin] = useState(true);
   const { loading } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
@@ -39,7 +38,7 @@ export const AuthModal: FC<AuthModalProps> = ({ isOpen, toggleModal }) => {
     data: LoginFormInputs
   ) => {
     dispatch(loginAction(data) as unknown as UnknownAction);
-    toggleModal();
+    onClose();
     methods.reset();
   };
 
@@ -50,7 +49,7 @@ export const AuthModal: FC<AuthModalProps> = ({ isOpen, toggleModal }) => {
         displayName: data.displayName,
       } as UserData);
 
-      toggleModal();
+      onClose();
       methods.reset();
     } catch (error) {
       console.error('Registration error:', error);
@@ -59,12 +58,12 @@ export const AuthModal: FC<AuthModalProps> = ({ isOpen, toggleModal }) => {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') toggleModal();
+      if (event.key === 'Escape') onClose();
     };
 
     if (isOpen) document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, toggleModal]);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -74,7 +73,7 @@ export const AuthModal: FC<AuthModalProps> = ({ isOpen, toggleModal }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={() => toggleModal()}>
+    <Modal isOpen={isOpen} onClose={() => onClose()}>
       <div className="flex items-center max-w-2xl">
         <img
           className="-ml-6 max-w-1/2"

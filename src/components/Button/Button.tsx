@@ -1,7 +1,7 @@
-import './Button.css';
-
 import { cva, type VariantProps } from 'class-variance-authority';
 import cn from 'clsx';
+
+import tailSpin from '../../assets/tail-spin.svg';
 
 type ButtonProps = {
   className?: string;
@@ -11,7 +11,7 @@ type ButtonProps = {
   React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const buttonVariants = cva(
-  'flex items-center justify-center font-semibold rounded transition-all relative',
+  'flex items-center justify-center font-semibold transition-all relative outline-0',
   {
     variants: {
       size: {
@@ -76,12 +76,12 @@ const buttonVariants = cva(
   }
 );
 
-const loaderVariants = cva('', {
+const loaderVariants = cva('absolute animate-spin', {
   variants: {
     size: {
-      sm: 'sm',
-      md: 'md',
-      lg: 'lg',
+      sm: 'scale-50',
+      md: 'scale-75',
+      lg: 'scale-100',
     },
     intent: {
       solid: 'white',
@@ -114,13 +114,11 @@ export function Button({
       {...props}
     >
       {loading && (
-        // TODO: Move loader to separate component
-        <div className={cn(loaderVariants({ size, intent }), 'loader--ring')}>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
+        <img
+          src={tailSpin}
+          alt="loader"
+          className={cn(loaderVariants({ size, intent }))}
+        />
       )}
       <span className={cn(loading ? 'opacity-0' : 'opacity-100')}>
         {children}

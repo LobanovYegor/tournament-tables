@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 
 interface CreateTournamentModalProps {
   isOpen: boolean;
-  toggleModal: () => void;
+  onClose: () => void;
 }
 
 interface CreateTournamentForm {
@@ -21,7 +21,7 @@ interface CreateTournamentForm {
 
 export function CreateTournamentModal({
   isOpen,
-  toggleModal,
+  onClose,
 }: CreateTournamentModalProps) {
   const methods = useForm<CreateTournamentForm>();
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ export function CreateTournamentModal({
   const onCreateTable: SubmitHandler<CreateTournamentForm> = async (data) => {
     try {
       await createTournament(data as Tournament);
-      toggleModal();
+      onClose();
       methods.reset();
       dispatch(fetchTournaments() as unknown as UnknownAction);
     } catch (error) {
@@ -38,9 +38,12 @@ export function CreateTournamentModal({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={() => toggleModal()}>
-      <h3>Create New Tournament</h3>
-
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={'Create New Tournament'}
+      disableBackdropClose={true}
+    >
       <FormProvider {...methods}>
         <form
           className="min-w-md"
@@ -52,7 +55,12 @@ export function CreateTournamentModal({
           <InputField name="startDate" label="Date of Start" type="date" />
           <InputField name="status" label="Status" type="text" />
 
-          <Button type="submit">Create</Button>
+          <div className="flex justify-end gap-2">
+            <Button type="submit">Create</Button>
+            <Button type="button" intent="outline" onClick={onClose}>
+              Close
+            </Button>
+          </div>
         </form>
       </FormProvider>
     </Modal>

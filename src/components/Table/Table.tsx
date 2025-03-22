@@ -1,26 +1,24 @@
-import { FC, HTMLProps, ReactNode } from 'react';
+import { FC, HTMLProps, PropsWithChildren } from 'react';
 
-interface TableProps extends HTMLProps<HTMLTableElement> {
-  children: ReactNode;
+type TableProps = PropsWithChildren<HTMLProps<HTMLTableElement>> & {
   className?: string;
-}
+};
 
-interface TableHeaderProps extends HTMLProps<HTMLTableSectionElement> {
+type TableHeaderProps = PropsWithChildren<
+  HTMLProps<HTMLTableSectionElement>
+> & {
   columns: string[];
-}
+};
 
-interface TableBodyProps extends HTMLProps<HTMLTableSectionElement> {
-  children: ReactNode;
-}
+type TableBodyProps = PropsWithChildren<HTMLProps<HTMLTableSectionElement>>;
 
-interface TableRowProps extends HTMLProps<HTMLTableRowElement> {
-  children: ReactNode;
+type TableRowProps = PropsWithChildren<HTMLProps<HTMLTableRowElement>> & {
   onClick?: () => void;
-}
+};
 
-interface TableCellProps extends HTMLProps<HTMLTableCellElement> {
-  children: ReactNode;
-}
+type TableCellProps = PropsWithChildren<HTMLProps<HTMLTableCellElement>> & {
+  onClick?: () => void;
+};
 
 export const Table: FC<TableProps> & {
   Header: FC<TableHeaderProps>;

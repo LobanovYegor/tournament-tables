@@ -35,8 +35,8 @@ const inputVariants = cva(
         lg: 'text-lg',
       },
       error: {
-        true: 'border-red-500 focus:ring-red-200',
-        false: 'mb-6 border-gray-300 focus:ring-blue-200',
+        true: 'border-b-red-500 focus:ring-red-200',
+        false: 'mb-5 border-gray-300 focus:ring-blue-200',
       },
     },
     defaultVariants: {
@@ -75,7 +75,7 @@ export const InputField: FC<InputFieldProps> = ({
   const error = errors[name] as FieldError | undefined;
 
   return (
-    <div className={cn('flex gap-1 flex-col', className)}>
+    <div className={cn('flex flex-col', className)}>
       <label className={labelVariants({ size })} htmlFor={name}>
         {label}:
       </label>
