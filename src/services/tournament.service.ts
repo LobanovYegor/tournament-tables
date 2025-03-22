@@ -1,4 +1,4 @@
-import { Tournament } from '@models';
+import { Participant, Tournament } from '@models';
 
 import {
   addDocumentByPath,
@@ -16,8 +16,8 @@ export const getTournament = async (id: string): Promise<Tournament | null> => {
   return await getDocumentByPath('tournaments', id);
 };
 
-export const createTournament = async (data: Tournament): Promise<void> => {
-  await addDocumentByPath('tournaments', {
+export const createTournament = async (data: Tournament): Promise<string> => {
+  return await addDocumentByPath('tournaments', {
     ...data,
     startDate: data.startDate
       ? new Date(data.startDate).toISOString()
@@ -39,4 +39,20 @@ export const updateTournament = async (
 
 export const deleteTournament = async (id: string): Promise<void> => {
   await deleteDocumentByPath('tournaments', id);
+};
+
+export const getParticipants = async (id: string) => {
+  return await getCollectionByPath<Participant>(
+    `tournaments/${id}/participants`
+  );
+};
+
+export const addParticipant = async (
+  tournamentId: string,
+  data: Participant
+) => {
+  return await addDocumentByPath(
+    `tournaments/${tournamentId}/participants`,
+    data
+  );
 };

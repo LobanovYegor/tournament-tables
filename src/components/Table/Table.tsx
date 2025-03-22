@@ -1,32 +1,35 @@
-import './Table.css';
+import { FC, HTMLProps, PropsWithChildren } from 'react';
 
-import { FC, ReactNode } from 'react';
-
-interface TableProps {
-  children: ReactNode;
+type TableProps = PropsWithChildren<HTMLProps<HTMLTableElement>> & {
   className?: string;
-}
+};
 
-interface TableHeaderProps {
+type TableHeaderProps = PropsWithChildren<
+  HTMLProps<HTMLTableSectionElement>
+> & {
   columns: string[];
-}
+};
 
-interface TableBodyProps {
-  children: ReactNode;
-}
+type TableBodyProps = PropsWithChildren<HTMLProps<HTMLTableSectionElement>>;
 
-interface TableRowProps {
-  children: ReactNode;
+type TableRowProps = PropsWithChildren<HTMLProps<HTMLTableRowElement>> & {
   onClick?: () => void;
-}
+};
 
-interface TableCellProps {
-  children: ReactNode;
-}
+type TableCellProps = PropsWithChildren<HTMLProps<HTMLTableCellElement>> & {
+  onClick?: () => void;
+};
 
-export const Table: FC<TableProps> = ({ children, className }) => {
+export const Table: FC<TableProps> & {
+  Header: FC<TableHeaderProps>;
+  Body: FC<TableBodyProps>;
+  Row: FC<TableRowProps>;
+  Cell: FC<TableCellProps>;
+} = ({ children, ...props }) => {
   return (
-    <table className={'w-full border-collapse' + className}>{children}</table>
+    <table className="border-collapse" {...props}>
+      {children}
+    </table>
   );
 };
 
@@ -35,7 +38,7 @@ const Header: FC<TableHeaderProps> = ({ columns }) => {
     <thead className="bg-gray-100 text-gray-700 uppercase text-sm">
       <tr>
         {columns?.map((col) => (
-          <th key={col} className="px-6 py-3 text-left">
+          <th key={col} className="px-2 py-2 bg-primary-300">
             {col}
           </th>
         ))}
@@ -44,20 +47,20 @@ const Header: FC<TableHeaderProps> = ({ columns }) => {
   );
 };
 
-const Body: FC<TableBodyProps> = ({ children }) => {
-  return <tbody className="divide-y divide-gray-200">{children}</tbody>;
+const Body: FC<TableBodyProps> = ({ children, ...props }) => {
+  return <tbody {...props}>{children}</tbody>;
 };
 
-const Row: FC<TableRowProps> = ({ children, onClick }) => {
+const Row: FC<TableRowProps> = ({ children, onClick, ...props }) => {
   return (
-    <tr onClick={onClick} className={'bg-gray-50'}>
+    <tr onClick={onClick} {...props}>
       {children}
     </tr>
   );
 };
 
-const Cell: FC<TableCellProps> = ({ children }) => {
-  return <td className="px-6 py-4">{children}</td>;
+const Cell: FC<TableCellProps> = ({ children, ...props }) => {
+  return <td {...props}>{children}</td>;
 };
 
 Table.Header = Header;

@@ -32,16 +32,27 @@ module.exports = {
       version: 'detect',
     },
     'import/resolver': {
-      typescript: {}, // Resolve TypeScript imports
+      typescript: {},
     },
   },
   rules: {
     'prettier/prettier': 'error',
-    'react/react-in-jsx-scope': 'off', // React 17+ не требует импортировать React
+    'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-    'simple-import-sort/imports': 'error',
+    'simple-import-sort/imports': [
+      'warning',
+      {
+        groups: [
+          ['^react', '^next'],
+          ['^@?\\w'],
+          ['^@(/.*)?$'],
+          ['^\\./.*', '^\\.\\./.*'],
+          ['^.+\\.css$'],
+        ],
+      },
+    ],
     'simple-import-sort/exports': 'error',
-    'import/order': 'off',
+    'import/order': 'error',
     'import/newline-after-import': ['error', { count: 1 }],
     'import/no-duplicates': 'error',
   },

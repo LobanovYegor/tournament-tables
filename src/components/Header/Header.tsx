@@ -1,9 +1,7 @@
-import './Header.css';
-
-import { AuthModal } from '@components';
+import { AuthModal, Button } from '@components';
 import { useAuth } from '@hooks';
 import { logOut } from '@services';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Header() {
@@ -23,16 +21,16 @@ export default function Header() {
   };
 
   return (
-    <header className="header">
-      <div className="logo">
+    <header className="flex justify-between items-center px-6 h-16">
+      <div>
         <Link to="/">Logo</Link>
       </div>
-      <div className="controls">
+      <div className="flex gap-4 items-center">
         <Link to="/tournaments">Current tournaments</Link>
         <a>Support</a>
         {user ? (
           <>
-            <span className="user-name">{user.displayName}</span>
+            <span className="font-bold">{user.displayName}</span>
             <span
               className="material-symbols-outlined link-text"
               onClick={handleLogout}
@@ -42,17 +40,11 @@ export default function Header() {
           </>
         ) : (
           <>
-            <button className="primary-button" onClick={toggleModal}>
-              Login
-            </button>
-            <AuthModal
-              isOpen={isLoginModalOpen}
-              toggleModal={toggleModal}
-              shouldCloseOnOverlayClick={true}
-            />
+            <Button onClick={toggleModal}>Login</Button>
           </>
         )}
       </div>
+      <AuthModal isOpen={isLoginModalOpen} onClose={toggleModal} />
     </header>
   );
 }
